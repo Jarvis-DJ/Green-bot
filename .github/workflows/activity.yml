@@ -1,57 +1,172 @@
-name: Natural GitHub Activity Bot
+name: Daily GitHub Activity Bot
+
 
 on:
+
   schedule:
-    - cron: '0 6 * * *'    # 11:30 AM IST
-    - cron: '0 12 * * *'   # 5:30 PM IST
-    - cron: '45 15 * * *'  # 9:15 PM IST
+
+    # 11:30 AM IST
+    - cron: "0 6 * * *"
+
+    # 5:30 PM IST
+    - cron: "0 12 * * *"
+
+    # 9:15 PM IST
+    - cron: "45 15 * * *"
+
+
   workflow_dispatch:
 
+
+
 jobs:
+
+
   commit:
+
+
     runs-on: ubuntu-latest
+
+
+
     steps:
+
+
+
+      # Checkout repository
+
       - name: Checkout repository
+
         uses: actions/checkout@v4
+
         with:
-          fetch-depth: 0  # Important for rebase and push
 
-      - name: Set up Git identity as TRahulsingh
-        run: |
-          git config user.name "TRahulsingh"
-          git config user.email "181671845+TRahulsingh@users.noreply.github.com"
+          fetch-depth: 0
 
-      - name: Install Python & pytz
+
+
+
+      # Configure Git account
+
+      - name: Configure Git Identity
+
         run: |
-          sudo apt-get update
-          sudo apt-get install -y python3 python3-pip
+
+          git config user.name "Jarvis-DJ"
+
+          git config user.email "humanerror0729@gmail.com"
+
+
+
+
+      # Setup Python
+
+      - name: Setup Python
+
+        uses: actions/setup-python@v5
+
+        with:
+
+          python-version: "3.x"
+
+
+
+
+      # Install required package
+
+      - name: Install dependencies
+
+        run: |
+
           pip install pytz
 
-      - name: Run commit script
+
+
+
+      # Run your Python auto commit bot
+
+      - name: Run commit.py
+
         run: |
+
           python3 commit.py
 
-      - name: Stage files if changed (pre-pull)
+
+
+
+      # Save generated changes
+
+      - name: Commit changes
+
         run: |
+
+
           if [ -n "$(git status --porcelain)" ]; then
-            echo "📌 Pre-pull changes found. Committing..."
+
+
+            echo "📌 Changes found"
+
+
             git add .
-            git commit -m "📌 Pre-pull auto-commit to avoid rebase error" || echo "Nothing to commit"
+
+
+            git commit -m "🚀 Daily automated progress update"
+
+
+
           else
-            echo "✅ No local changes to stage."
+
+
+            echo "✅ No changes found"
+
+
+
           fi
 
-      - name: Pull latest changes before pushing
+
+
+
+      # Sync with GitHub
+
+      - name: Pull latest changes
+
         run: |
+
+
           git pull origin main --rebase
 
-      - name: Push if commits are ahead
+
+
+
+      # Push commits
+
+      - name: Push changes
+
         run: |
+
+
           AHEAD=$(git rev-list --count origin/main..HEAD)
-          echo "Local branch is ahead by $AHEAD commit(s)."
-          if [ $AHEAD -gt 0 ]; then
-            echo "🔄 Changes detected. Pushing..."
+
+
+          echo "Commits ahead: $AHEAD"
+
+
+
+          if [ "$AHEAD" -gt 0 ]; then
+
+
+            echo "🚀 Pushing changes"
+
+
             git push origin main
+
+
+
           else
-            echo "✅ No new commits to push."
+
+
+            echo "✅ Nothing to push"
+
+
+
           fi
