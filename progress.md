@@ -711,3 +711,4 @@
 [2026-08-05 10:41:15 PM] It’s not about perfection. It’s about progress.
 [2026-08-06 01:55:19 PM] Just showing up matters.
 [2026-08-06 07:00:01 PM] It’s not about perfection. It’s about progress.
+[2026-08-06 07:00:01 PM] Consistency is more important than intensity.
