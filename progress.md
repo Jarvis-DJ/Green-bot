@@ -898,3 +898,4 @@
 [2026-11-28 08:25:37 PM] The habit of showing up wins the game.
 [2026-11-29 12:43:58 AM] The habit of showing up wins the game.
 [2026-11-29 12:43:58 AM] The habit of showing up wins the game.
+[2026-11-29 12:43:58 AM] It’s not about perfection. It’s about progress.
